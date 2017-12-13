@@ -1,0 +1,86 @@
+group 'com.klinec'
+version '0.0.1'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.klinec', name: 'jcardsim', version: '3.0.4', transitive: false
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc {
+        failOnError = false
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+archivesBaseName = 'javacard-tools'
+
+// When uploading setup your ~/.gradle/gradle.properties
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'javacard-tools'
+                packaging 'jar'
+
+                description 'JavaCard tools for JC development'
+                url 'https://github.com/ph4r05/javacard-tools'
+
+                scm {
+                    connection 'scm:git:git://github.com/ph4r05/javacard-tools'
+                    developerConnection 'scm:git:git@github.com:ph4r05/javacard-tools.git'
+                    url 'https://github.com/ph4r05/javacard-tools'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://raw.githubusercontent.com/ph4r05/javacard-tools/master/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ph4r05'
+                        name 'Dusan Klinec'
+                        email 'dusan.klinec@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
