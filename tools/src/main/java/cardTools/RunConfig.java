@@ -13,7 +13,7 @@ public class RunConfig {
     byte[] installData = null;
     
     public enum CARD_TYPE {
-        PHYSICAL, JCOPSIM, JCARDSIMLOCAL, JCARDSIMREMOTE
+        PHYSICAL, JCOPSIM, JCARDSIMLOCAL, JCARDSIMREMOTE, PHYSICAL_JAVAX
     }
 
     public CARD_TYPE testCardType = CARD_TYPE.PHYSICAL;

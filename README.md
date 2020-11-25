@@ -17,6 +17,21 @@ Maven
 Gradle
 
 ```groovy
-compile 'com.klinec:javacard-tools:0.0.1'
+compile 'com.klinec:javacard-tools:0.0.3'
 ```
 
+
+## Repository
+
+New version requires apdu4j which is not currently published on maven central.
+
+You can add additional repositories to the gradle:
+
+```
+repositories {
+    maven { url "https://javacard.pro/maven" }
+    maven { url "https://deadcode.me/mvn" }
+}
+```
+
+Or provide the required libraries as a static JARs. 

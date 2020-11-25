@@ -1,20 +1,34 @@
 group 'com.klinec'
-version '0.0.2'
+version '0.0.3'
 
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
+
+allprojects {
+    if (!this.ext.has('jcardsimVersion'))
+        this.ext['jcardsimVersion'] = '3.0.5.11'
+    if (!this.ext.has('apdu4jVersion'))
+        this.ext['apdu4jVersion'] = '2020b1'
+    if (!this.ext.has('apdu4jPcscVersion'))
+        this.ext['apdu4jPcscVersion'] = '20.08.12'
+}
+
 
 repositories {
     mavenCentral()
+    maven { url "https://javacard.pro/maven" }
+    maven { url "https://deadcode.me/mvn" }
 }
 
 dependencies {
-    compile group: 'com.klinec', name: 'jcardsim', version: '3.0.5.5', transitive: false
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'com.klinec', name: 'jcardsim', version: jcardsimVersion, transitive: false
+    implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.28"
+    implementation "com.github.martinpaljak:apdu4j-core:$apdu4jVersion"
+    implementation "com.github.martinpaljak:apdu4j-pcsc:$apdu4jPcscVersion"
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 task javadocJar(type: Jar) {
