@@ -10,14 +10,14 @@ Maven
 <dependency>
   <groupId>com.klinec</groupId>
   <artifactId>javacard-tools</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
 Gradle
 
 ```groovy
-compile 'com.klinec:javacard-tools:0.0.3'
+compile 'com.klinec:javacard-tools:0.0.4'
 ```
 
 

@@ -145,7 +145,9 @@ public class CardManager {
         AID appletAID = new AID(appletId, (short) 0, (byte) appletId.length);
 
         AID appletAIDRes = simulator.installApplet(appletAID, appletClass, installData, (short) 0, (byte) installData.length);
-        simulator.selectApplet(appletAID);
+        if (autoSelect) {
+            simulator.selectApplet(appletAID);
+        }
 
         return new SimulatedCardChannelLocal(simulator);
     }
@@ -155,7 +157,9 @@ public class CardManager {
 
         // Select applet (mpcapplet)
         LOG.debug("Smartcard: Selecting applet...");
-        selectResponse = selectApplet();
+        if(autoSelect) {
+            selectResponse = selectApplet();
+        }
 
         return ch;
     }
